@@ -8,3 +8,6 @@ langchain
 langchain-text-splitters
 PyMuPDF
 numpy
+SpeechRecognition
+deep-translator
+gradio
