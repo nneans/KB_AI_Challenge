@@ -10,5 +10,5 @@ PyMuPDF
 numpy
 SpeechRecognition
 deep-translator
-gradio
+gradio>=5.0
 python-dotenv

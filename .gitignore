@@ -7,3 +7,4 @@ venv/
 env/
 qdrant_storage/
 gradio_cached_examples/
+app.py
