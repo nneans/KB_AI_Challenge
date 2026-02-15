@@ -1,4 +1,4 @@
-# KB AI RAG Service 🏦
+# KB AI Challenge
 
 이 프로젝트는 KB 금융 관련 문서를 업로드하고 질문할 수 있는 **RAG(검색 증강 생성) API 서비스**입니다.
 FastAPI를 사용하여 구축되었으며, 로컬 Qdrant와 무료 Groq(Llama 3) API를 활용합니다.
