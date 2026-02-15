@@ -1,0 +1,10 @@
+fastapi
+uvicorn
+python-multipart
+groq
+qdrant-client
+sentence-transformers
+langchain
+langchain-text-splitters
+PyMuPDF
+numpy
