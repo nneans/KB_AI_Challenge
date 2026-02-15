@@ -16,6 +16,11 @@ from typing import List
 # --- 라이브러리 임포트 ---
 import gradio as gr
 import speech_recognition as sr
+from dotenv import load_dotenv  # 환경 변수 로드 (.env)
+
+# .env 파일 로드 (로컬 개발용)
+load_dotenv()
+
 from deep_translator import GoogleTranslator
 from sentence_transformers import SentenceTransformer
 from groq import Groq

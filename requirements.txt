@@ -11,3 +11,4 @@ numpy
 SpeechRecognition
 deep-translator
 gradio
+python-dotenv
