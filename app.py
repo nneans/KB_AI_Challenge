@@ -259,29 +259,49 @@ def voice_to_text(audio_input):
 # 4. Gradio UI 구성
 # =========================================================
 
-with gr.Blocks(theme=gr.themes.Soft(), title="KB AI Challenge") as demo:
-    gr.Markdown("# KB AI Challenge")
-    gr.Markdown("서버 없이 로컬에서 동작하는 **개인용 RAG 시스템**입니다. PDF를 업로드하면 즉시 학습하여 답변합니다.")
+# 테마 설정 (KB 금융 색상 - 노란색/회색 톤)
+theme = gr.themes.Soft(
+    primary_hue="amber",
+    neutral_hue="slate",
+    font=[gr.themes.GoogleFont("Noto Sans KR"), "ui-sans-serif", "system-ui", "sans-serif"]
+)
+
+with gr.Blocks(theme=theme, title="KB Financial AI Assistant") as demo:
+    gr.Markdown(
+        """
+        # 🏦 KB Financial AI Assistant
+        **금융 지식 RAG 시스템**에 오신 것을 환영합니다.
+        
+        PDF 문서를 업로드하면 AI가 내용을 학습하고, 질문에 대한 정확한 답변과 근거 자료를 제공합니다.
+        """
+    )
     
-    with gr.Accordion("📂 1. 지식 베이스 구축 (파일 업로드)", open=True):
+    with gr.Accordion("📂 지식 베이스 구축 (Knowledge Base Setup)", open=True):
         with gr.Row():
-            file_input = gr.File(label="PDF 업로드 (여러 개 가능)", file_count="multiple", file_types=[".pdf"])
-            upload_btn = gr.Button("저장하기", variant="primary")
-        upload_status = gr.Textbox(label="처리 상태", interactive=False)
+            with gr.Column(scale=2):
+                file_input = gr.File(label="분석할 PDF 문서 업로드 (Drag & Drop)", file_count="multiple", file_types=[".pdf"])
+            with gr.Column(scale=1):
+                upload_btn = gr.Button("학습 시작 (Build Knowledge Base)", variant="primary")
+                upload_status = gr.Textbox(label="시스템 상태", placeholder="대기 중...", interactive=False)
         
     gr.Markdown("---")
-    gr.Markdown("### 🎤 2. AI와 대화하기")
-
+    
     with gr.Row():
-        with gr.Column(scale=1):
-            audio_in = gr.Audio(sources=["microphone", "upload"], type="numpy", label="음성 질문")
-            asr_btn = gr.Button("음성 인식 시작", variant="secondary")
-            text_in = gr.Textbox(label="인식된 텍스트 (직접 입력 가능)", lines=3)
-            chat_btn = gr.Button("질문하기", variant="primary")
+        # 왼쪽 컬럼: 입력 (음성/텍스트)
+        with gr.Column(scale=1, min_width=300):
+            gr.Markdown("### 💬 질문 입력 (Query)")
+            audio_in = gr.Audio(sources=["microphone", "upload"], type="numpy", label="음성으로 질문하기")
+            asr_btn = gr.Button("음성 인식 (STT)", variant="secondary")
             
-        with gr.Column(scale=2):
-            answer_box = gr.Textbox(label="AI 답변 (한국어)", lines=6, interactive=False)
-            ref_box = gr.Textbox(label="참고 문헌", lines=4, interactive=False)
+            text_in = gr.Textbox(label="질문 내용", placeholder="궁금한 내용을 입력하세요...", lines=3)
+            chat_btn = gr.Button("답변 요청 (Ask AI)", variant="primary", size="lg")
+            
+        # 오른쪽 컬럼: 결과 (답변/참조)
+        with gr.Column(scale=2, min_width=400):
+            gr.Markdown("### 🤖 분석 결과 (Analysis Result)")
+            answer_box = gr.Textbox(label="AI 답변", lines=8, interactive=False, show_copy_button=True)
+            ref_box = gr.Textbox(label="참고 문헌 / 근거 자료", lines=4, interactive=False)
+            
             
     # 이벤트 연결
     upload_btn.click(process_uploaded_files, inputs=[file_input], outputs=[upload_status])
